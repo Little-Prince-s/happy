@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>温馨提示弹窗效果</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #000;
+        }
+        .note {
+            position: absolute;
+            padding: 10px 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            color: #fff;
+            font-family: "微软雅黑", sans-serif;
+            cursor: pointer;
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        #startBtn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 12px 24px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            z-index: 9999;
+        }
+        #startBtn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <button id="startBtn">^_^</button>
+    <script>
+        // 温馨提示内容列表
+        const notes = [
+            "多喝水哦~",
+            "今天过得开心嘛",
+            "保持微笑呀",
+            "每天都要元气满满",
+            "顺顺利利",
+            "天冷了，多穿衣服",
+            "别熬夜",
+            "记得吃水果",
+            "我想你了",
+            "期待下一次见面",
+            "好好爱自己",
+            "所有烦恼都消失",
+            "梦想成真",
+            "保持好心情",
+            "早点休息"
+        ];
+
+        // 颜色列表
+        const colors = [
+            "#ff7f7f", "#7fff7f", "#7f7fff", "#ffbf7f", 
+            "#ff7fff", "#bf7fff", "#7fbfff", "#bfff7f"
+        ];
+
+        let intervalId = null;
+
+        // 创建并显示提示框的函数
+        function createNote() {
+            const note = document.createElement("div");
+            note.className = "note";
+            note.textContent = notes[Math.floor(Math.random() * notes.length)];
+            note.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            // 随机位置
+            const x = Math.random() * (window.innerWidth - 150);
+            const y = Math.random() * (window.innerHeight - 80);
+            note.style.left = `${x}px`;
+            note.style.top = `${y}px`;
+
+            document.body.appendChild(note);
+
+            // 点击提示框时移除
+            note.addEventListener("click", () => {
+                note.remove();
+            });
+        }
+
+        document.getElementById("startBtn").addEventListener("click", () => {
+            // 隐藏开始按钮
+            document.getElementById("startBtn").style.display = "none";
+            // 开始生成弹窗
+            intervalId = setInterval(createNote, 100);
+        });
+    </script>
+</body>
+</html>
